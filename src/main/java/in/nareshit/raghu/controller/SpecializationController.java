@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import in.nareshit.raghu.entity.Specialization;
 import in.nareshit.raghu.service.ISpecializationService;
@@ -61,6 +62,14 @@ public class SpecializationController {
 	
 	
 	//4. remove
+	@GetMapping("/delete")
+	public String delete(
+			@RequestParam Long id
+			) 
+	{
+		service.deleteSpecialization(id);
+		return "redirect:all";
+	}
 	
 	//5. show edit page
 	

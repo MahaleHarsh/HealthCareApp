@@ -28,4 +28,9 @@ public class SpecializationServiceImpl
 		List<Specialization> list =  repo.findAll();
 		return list;
 	}
+	
+	@Override
+	public void deleteSpecialization(Long id) {
+		repo.deleteById(id);
+	}
 }

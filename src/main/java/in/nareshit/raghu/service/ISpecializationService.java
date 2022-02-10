@@ -8,4 +8,5 @@ public interface ISpecializationService {
 
 	Long saveSpecialization(Specialization obj);
 	List<Specialization> getAllSpecializations();
+	void deleteSpecialization(Long id);
 }
