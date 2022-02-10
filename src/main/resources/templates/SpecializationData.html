@@ -30,8 +30,8 @@
 							<td>[[${ob.specName}]]</td>
 							<td>[[${ob.specNote}]]</td>
 							<td>
-								<a href="#" class="btn btn-danger">DELETE</a> |
-								<a href="#" class="btn btn-warning">EDIT</a>
+								<a th:href="@{/spec/delete(id=${ob.specId})}" class="btn btn-danger">DELETE</a> |
+								<a th:href="@{/spec/edit(id=${ob.specId})}" class="btn btn-warning">EDIT</a>
 							</td>
 						</tr>
 					</table>
