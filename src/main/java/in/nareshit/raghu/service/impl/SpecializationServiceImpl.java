@@ -1,5 +1,7 @@
 package in.nareshit.raghu.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,11 @@ public class SpecializationServiceImpl
 	public Long saveSpecialization(Specialization obj) {
 		obj = repo.save(obj); //INSERT
 		return obj.getSpecId();//PK
+	}
+	
+	@Override
+	public List<Specialization> getAllSpecializations() {
+		List<Specialization> list =  repo.findAll();
+		return list;
 	}
 }

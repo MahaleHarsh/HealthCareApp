@@ -1,5 +1,7 @@
 package in.nareshit.raghu.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +48,17 @@ public class SpecializationController {
 	}
 	
 	//3. fetch and display
+	@GetMapping("/all")
+	public String showData(Model model) {
+		//call service
+		List<Specialization> list = service.getAllSpecializations();
+		//send data to UI
+		model.addAttribute("list", list);
+		
+		//goto HTML Page
+		return "SpecializationData";
+	}
+	
 	
 	//4. remove
 	
