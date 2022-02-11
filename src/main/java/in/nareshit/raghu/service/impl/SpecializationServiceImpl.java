@@ -1,6 +1,7 @@
 package in.nareshit.raghu.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,11 @@ public class SpecializationServiceImpl
 	@Override
 	public void deleteSpecialization(Long id) {
 		repo.deleteById(id);
+	}
+	
+	@Override
+	public Specialization getOneSpecialization(Long id) {
+		Optional<Specialization> opt = repo.findById(id);
+		return opt.get();
 	}
 }

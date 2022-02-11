@@ -72,6 +72,19 @@ public class SpecializationController {
 	}
 	
 	//5. show edit page
+	@GetMapping("/edit")
+	public String showEdit(
+			@RequestParam Long id,
+			Model model
+			) 
+	{
+		//call service
+		Specialization obj =  service.getOneSpecialization(id);
+		//send data to UI
+		model.addAttribute("specialization", obj);
+		//Goto Edit HTML Page
+		return "SpecializationEdit";
+	}
 	
 	//6. update data
 	
