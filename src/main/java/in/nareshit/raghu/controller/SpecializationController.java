@@ -87,6 +87,16 @@ public class SpecializationController {
 	}
 	
 	//6. update data
-	
+	@PostMapping("/update")
+	public String update(
+			//Read Form data 
+			@ModelAttribute Specialization specialization
+			)
+	{
+		//call service
+		service.updateSpecialization(specialization);
+		//goto Data Page back
+		return "redirect:all";
+	}
 	
 }

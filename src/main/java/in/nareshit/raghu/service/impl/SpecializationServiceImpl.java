@@ -40,4 +40,9 @@ public class SpecializationServiceImpl
 		Optional<Specialization> opt = repo.findById(id);
 		return opt.get();
 	}
+	
+	@Override
+	public void updateSpecialization(Specialization obj) {
+		repo.save(obj);
+	}
 }
