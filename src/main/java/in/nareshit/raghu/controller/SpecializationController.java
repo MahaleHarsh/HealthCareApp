@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import in.nareshit.raghu.entity.Specialization;
 import in.nareshit.raghu.service.ISpecializationService;
+import in.nareshit.raghu.view.SpecializationExcelView;
 
 @Controller
 @RequestMapping("/spec")
@@ -99,4 +101,19 @@ public class SpecializationController {
 		return "redirect:all";
 	}
 	
+	//7. Excel Export
+	@GetMapping("/excel")
+	public ModelAndView excelExport() {
+		//Create MAV obj 
+		ModelAndView m = new ModelAndView();
+		
+		//provide view class object
+		m.setView(new SpecializationExcelView());
+		
+		//Read data from DB and send to View class
+		List<Specialization> list = service.getAllSpecializations();
+		m.addObject("list", list);
+		
+		return m;
+	}
 }
