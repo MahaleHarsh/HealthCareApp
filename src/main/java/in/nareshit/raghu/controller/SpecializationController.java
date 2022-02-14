@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import in.nareshit.raghu.entity.Specialization;
 import in.nareshit.raghu.service.ISpecializationService;
@@ -52,11 +53,16 @@ public class SpecializationController {
 	
 	//3. fetch and display
 	@GetMapping("/all")
-	public String showData(Model model) {
+	public String showData(
+			Model model,
+			@RequestParam(required = false) String message
+			)
+	{
 		//call service
 		List<Specialization> list = service.getAllSpecializations();
 		//send data to UI
 		model.addAttribute("list", list);
+		model.addAttribute("message", message);
 		
 		//goto HTML Page
 		return "SpecializationData";
@@ -66,10 +72,12 @@ public class SpecializationController {
 	//4. remove
 	@GetMapping("/delete")
 	public String delete(
-			@RequestParam Long id
+			@RequestParam Long id,
+			RedirectAttributes attributes
 			) 
 	{
 		service.deleteSpecialization(id);
+		attributes.addAttribute("message", "Specialization '"+id+"' Deleted");
 		return "redirect:all";
 	}
 	
@@ -77,26 +85,37 @@ public class SpecializationController {
 	@GetMapping("/edit")
 	public String showEdit(
 			@RequestParam Long id,
-			Model model
+			Model model,
+			RedirectAttributes attributes
 			) 
 	{
+		String page = null;
 		//call service
 		Specialization obj =  service.getOneSpecialization(id);
-		//send data to UI
-		model.addAttribute("specialization", obj);
-		//Goto Edit HTML Page
-		return "SpecializationEdit";
+		if(obj != null ) {
+			//send data to UI
+			model.addAttribute("specialization", obj);
+			//Goto Edit HTML Page
+			page = "SpecializationEdit";
+		} else {
+			attributes.addAttribute("message", "Specialization '"+id+"' not exist");
+			page = "redirect:all";
+			
+		}
+		return page;
 	}
 	
 	//6. update data
 	@PostMapping("/update")
 	public String update(
 			//Read Form data 
-			@ModelAttribute Specialization specialization
+			@ModelAttribute Specialization specialization,
+			RedirectAttributes attributes
 			)
 	{
 		//call service
 		service.updateSpecialization(specialization);
+		attributes.addAttribute("message", "specialization '"+specialization.getSpecId()+"' Updated Success");
 		//goto Data Page back
 		return "redirect:all";
 	}

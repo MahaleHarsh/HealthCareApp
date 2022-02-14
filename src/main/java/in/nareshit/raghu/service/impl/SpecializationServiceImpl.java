@@ -38,7 +38,11 @@ public class SpecializationServiceImpl
 	@Override
 	public Specialization getOneSpecialization(Long id) {
 		Optional<Specialization> opt = repo.findById(id);
-		return opt.get();
+		if(opt.isEmpty()) {
+			return null;
+		} else {
+			return opt.get();
+		}
 	}
 	
 	@Override
