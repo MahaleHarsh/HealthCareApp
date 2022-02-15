@@ -1,6 +1,7 @@
 package in.nareshit.raghu.service;
 
 import java.util.List;
+import java.util.Map;
 
 import in.nareshit.raghu.entity.Specialization;
 
@@ -11,4 +12,5 @@ public interface ISpecializationService {
 	void deleteSpecialization(Long id);
 	Specialization getOneSpecialization(Long id);
 	void updateSpecialization(Specialization obj);
+	Map<Integer,String> getSpecializationIdAndName();
 }

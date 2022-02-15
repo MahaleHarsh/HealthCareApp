@@ -20,6 +20,7 @@
 						<tr class="bg-info text-white">
 							<th>ID</th>
 							<th>NAME</th>
+							<th>SPECIALIZATION</th>
 							<th>EMAIL</th>
 							<th>MOBILE</th>
 							<th>GENDER</th>
@@ -29,6 +30,7 @@
 						<tr th:each="ob:${list}">
 							<td>[[${ob.docId}]]</td>
 							<td>[[${ob.docName}]]</td>
+							<td>[[${ob.specialization.specName}]]</td>
 							<td>[[${ob.docEmail}]]</td>
 							<td>[[${ob.docMobile}]]</td>
 							<td>[[${ob.docGen}]]</td>

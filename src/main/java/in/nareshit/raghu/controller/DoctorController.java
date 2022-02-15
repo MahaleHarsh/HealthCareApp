@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import in.nareshit.raghu.entity.Doctor;
 import in.nareshit.raghu.exception.DoctorNotFoundException;
 import in.nareshit.raghu.service.IDoctorService;
+import in.nareshit.raghu.service.ISpecializationService;
 
 @Controller
 @RequestMapping("/doctor")
@@ -23,9 +24,17 @@ public class DoctorController {
 	@Autowired
 	private IDoctorService service;
 	
+	@Autowired
+	private ISpecializationService specializationService;
+	
+	private void commonUi(Model model) {
+		model.addAttribute("specializations", specializationService.getSpecializationIdAndName());
+	}
+	
 	//1. show Register page
 	@GetMapping("/register")
-	public String showReg() {
+	public String showReg(Model model) {
+		commonUi(model);
 		return "DoctorRegister";
 	}
 	
@@ -38,6 +47,7 @@ public class DoctorController {
 		Long id =  service.saveDoctor(doctor);
 		String message = "Doctor '"+id+"' created";
 		model.addAttribute("message", message);
+		commonUi(model);
 		return "DoctorRegister";
 	}
 	
@@ -82,6 +92,7 @@ public class DoctorController {
 		try {
 			Doctor doc =  service.getOneDoctor(id);
 			model.addAttribute("doctor", doc);
+			commonUi(model);
 			page = "DoctorEdit";
 		} catch (DoctorNotFoundException dnfe) {
 			attributes.addAttribute("message", dnfe.getMessage());

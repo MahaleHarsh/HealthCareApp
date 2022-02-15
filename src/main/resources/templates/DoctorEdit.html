@@ -54,6 +54,25 @@
 							</div>
 						</div>
 						
+						<!--row#integration-->
+						<div class="row">
+							<div class="col-3">
+								<label>DOCTOR SPECIALIZATION</label>
+							</div>
+							<div class="col-4">
+								<select id="specialization" th:field="*{specialization}" class="form-control">
+									<option value="">--SELECT--</option>
+									<option th:each="ob:${specializations}"
+										th:text="${ob.value}"
+										th:value="${ob.key}"
+									/>
+								</select>
+							</div>
+							<div class="col-5">
+								<span id="specializationError"></span>
+							</div>
+						</div>
+						
 						<!--row#3-->
 						<div class="row">
 							<div class="col-3">
