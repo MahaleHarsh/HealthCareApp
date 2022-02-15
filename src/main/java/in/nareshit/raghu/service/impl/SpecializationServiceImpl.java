@@ -50,7 +50,7 @@ public class SpecializationServiceImpl
 	
 	@Override
 	public void updateSpecialization(Specialization obj) {
-		if(obj.getSpecId()!=null || repo.existsById(obj.getSpecId())) {
+		if(obj.getSpecId()!=null && repo.existsById(obj.getSpecId())) {
 			repo.save(obj);
 		} else {
 			throw new SpecializationNotFoundException(
