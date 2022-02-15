@@ -55,7 +55,6 @@ public class AppoinmentController {
 			service.deleteAppoinment(id);
 			attributes.addAttribute("message","Appoinment deleted with Id:"+id);
 		} catch(AppoinmentNotFoundException e) {
-			e.printStackTrace() ;
 			attributes.addAttribute("message",e.getMessage());
 		}
 		return "redirect:all";
@@ -69,7 +68,6 @@ public class AppoinmentController {
 			model.addAttribute("appoinment",ob);
 			page="AppoinmentEdit";
 		} catch(AppoinmentNotFoundException e) {
-			e.printStackTrace() ;
 			attributes.addAttribute("message",e.getMessage());
 			page="redirect:all";
 		}
