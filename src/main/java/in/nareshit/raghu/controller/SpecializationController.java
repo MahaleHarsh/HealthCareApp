@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import in.nareshit.raghu.entity.Specialization;
+import in.nareshit.raghu.exception.SpecializationNotFoundException;
 import in.nareshit.raghu.service.ISpecializationService;
 import in.nareshit.raghu.view.SpecializationExcelView;
 
@@ -23,13 +24,13 @@ public class SpecializationController {
 
 	@Autowired
 	private ISpecializationService service;//HAS-A
-	
+
 	//1. Show Register Page
 	@GetMapping("/register")
 	public String showReg() {
 		return "SpecializationRegister";
 	}
-	
+
 	//2. save
 	@PostMapping("/save")
 	public String save(
@@ -40,17 +41,17 @@ public class SpecializationController {
 	{
 		//calling service
 		Long id = service.saveSpecialization(specialization);
-		
+
 		//creating message 
 		String message = "SPECIALIZATION '"+id+"' CREATED";
-		
+
 		//sending message to UI
 		model.addAttribute("message", message);
-		
+
 		//goto FORM Page
 		return "SpecializationRegister";
 	}
-	
+
 	//3. fetch and display
 	@GetMapping("/all")
 	public String showData(
@@ -63,12 +64,12 @@ public class SpecializationController {
 		//send data to UI
 		model.addAttribute("list", list);
 		model.addAttribute("message", message);
-		
+
 		//goto HTML Page
 		return "SpecializationData";
 	}
-	
-	
+
+
 	//4. remove
 	@GetMapping("/delete")
 	public String delete(
@@ -76,11 +77,15 @@ public class SpecializationController {
 			RedirectAttributes attributes
 			) 
 	{
-		service.deleteSpecialization(id);
-		attributes.addAttribute("message", "Specialization '"+id+"' Deleted");
+		try {
+			service.deleteSpecialization(id);
+			attributes.addAttribute("message", "Specialization '"+id+"' Deleted");
+		} catch (SpecializationNotFoundException snfe) {
+			attributes.addAttribute("message", snfe.getMessage());
+		}
 		return "redirect:all";
 	}
-	
+
 	//5. show edit page
 	@GetMapping("/edit")
 	public String showEdit(
@@ -90,21 +95,21 @@ public class SpecializationController {
 			) 
 	{
 		String page = null;
-		//call service
-		Specialization obj =  service.getOneSpecialization(id);
-		if(obj != null ) {
-			//send data to UI
+		try {
+			//call service
+			Specialization obj =  service.getOneSpecialization(id);
 			model.addAttribute("specialization", obj);
 			//Goto Edit HTML Page
 			page = "SpecializationEdit";
-		} else {
-			attributes.addAttribute("message", "Specialization '"+id+"' not exist");
+
+		} catch (SpecializationNotFoundException snfe) {
+			attributes.addAttribute("message", snfe.getMessage());
 			page = "redirect:all";
-			
 		}
+
 		return page;
 	}
-	
+
 	//6. update data
 	@PostMapping("/update")
 	public String update(
@@ -119,20 +124,20 @@ public class SpecializationController {
 		//goto Data Page back
 		return "redirect:all";
 	}
-	
+
 	//7. Excel Export
 	@GetMapping("/excel")
 	public ModelAndView excelExport() {
 		//Create MAV obj 
 		ModelAndView m = new ModelAndView();
-		
+
 		//provide view class object
 		m.setView(new SpecializationExcelView());
-		
+
 		//Read data from DB and send to View class
 		List<Specialization> list = service.getAllSpecializations();
 		m.addObject("list", list);
-		
+
 		return m;
 	}
 }
