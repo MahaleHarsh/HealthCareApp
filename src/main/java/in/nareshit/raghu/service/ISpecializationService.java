@@ -12,5 +12,5 @@ public interface ISpecializationService {
 	void deleteSpecialization(Long id);
 	Specialization getOneSpecialization(Long id);
 	void updateSpecialization(Specialization obj);
-	Map<Integer,String> getSpecializationIdAndName();
+	Map<Long,String> getSpecializationIdAndName();
 }

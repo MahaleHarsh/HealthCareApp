@@ -61,7 +61,7 @@ public class SpecializationServiceImpl
 	}
 	
 	@Override
-	public Map<Integer, String> getSpecializationIdAndName() {
+	public Map<Long, String> getSpecializationIdAndName() {
 		List<Object[]> list = repo.getSpecializationIdAndName();
 		return AppUtil.convertListToMap(list);
 	}

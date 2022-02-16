@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -34,4 +36,9 @@ public class Appoinment {
 	private String details;
 	@Column(name = "app_fee_col")
 	private Double appFee;
+	
+	@ManyToOne
+	@JoinColumn(name="docIdFk")
+	private Doctor doctor;//HAS-A variable
+	
 }

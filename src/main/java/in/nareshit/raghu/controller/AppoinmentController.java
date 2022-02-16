@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import in.nareshit.raghu.entity.Appoinment;
 import in.nareshit.raghu.exception.AppoinmentNotFoundException;
 import in.nareshit.raghu.service.IAppoinmentService;
+import in.nareshit.raghu.service.IDoctorService;
 
 /**
  * @author:RAGHU SIR 
@@ -23,12 +24,22 @@ import in.nareshit.raghu.service.IAppoinmentService;
 @Controller
 @RequestMapping("/appoinment")
 public class AppoinmentController {
+	
 	@Autowired
 	private IAppoinmentService service;
+	
+	@Autowired
+	private IDoctorService doctorService; //HAS-A
 
+	private void commonUi(Model model) {
+		//Read Map from Child service and send to Parent UI
+		model.addAttribute("doctors", doctorService.getDocIdAndNames());
+	}
+	
 	@GetMapping("/register")
 	public String registerAppoinment(Model model) {
 		model.addAttribute("appoinment",new Appoinment());
+		commonUi(model);
 		return "AppoinmentRegister";
 	}
 
@@ -37,6 +48,7 @@ public class AppoinmentController {
 		java.lang.Long id=service.saveAppoinment(appoinment);
 		model.addAttribute("message","Appoinment created with Id:"+id);
 		model.addAttribute("appoinment",new Appoinment()) ;
+		commonUi(model);
 		return "AppoinmentRegister";
 	}
 
@@ -66,6 +78,7 @@ public class AppoinmentController {
 		try {
 			Appoinment ob=service.getOneAppoinment(id);
 			model.addAttribute("appoinment",ob);
+			commonUi(model);
 			page="AppoinmentEdit";
 		} catch(AppoinmentNotFoundException e) {
 			attributes.addAttribute("message",e.getMessage());

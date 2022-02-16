@@ -1,6 +1,7 @@
 package in.nareshit.raghu.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import in.nareshit.raghu.entity.Doctor;
 import in.nareshit.raghu.exception.DoctorNotFoundException;
 import in.nareshit.raghu.repo.DoctorRepository;
 import in.nareshit.raghu.service.IDoctorService;
+import in.nareshit.raghu.util.AppUtil;
 
 @Service
 public class DoctorServiceImpl implements IDoctorService {
@@ -48,6 +50,12 @@ public class DoctorServiceImpl implements IDoctorService {
 		} else {
 			throw new DoctorNotFoundException("Doctor '"+doc.getDocId()+"' not exist");
 		}
+	}
+	
+	@Override
+	public Map<Long, String> getDocIdAndNames() {
+		List<Object[]> list = repo.getDocIdAndNames();
+		return AppUtil.convertListToMap(list);
 	}
 
 }
