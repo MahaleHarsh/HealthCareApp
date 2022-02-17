@@ -1,5 +1,7 @@
 package in.nareshit.raghu.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,11 +36,18 @@ public class Appoinment {
 	private Long id;
 	
 	@Column(name = "app_dte_col")
-	private String appDate;
+	@DateTimeFormat(iso = ISO.DATE)
+	@Temporal(TemporalType.DATE)
+	private Date appDate;
+	
 	@Column(name = "app_slots_col")
 	private Integer noOfSlots;
+	
+	
 	@Column(name = "app_details_col")
 	private String details;
+	
+	
 	@Column(name = "app_fee_col")
 	private Double appFee;
 	
