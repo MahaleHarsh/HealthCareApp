@@ -11,4 +11,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
 	@Query("SELECT doc.docId, doc.docName FROM Doctor doc")
 	List<Object[]> getDocIdAndNames();
+	
+	@Query("SELECT spt.specName,COUNT(spt.specName) FROM Doctor doc INNER JOIN doc.specialization as spt GROUP BY spt.specName")
+	List<Object[]> getDocotrsBySpecialization();
 }

@@ -2,6 +2,8 @@ package in.nareshit.raghu.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import in.nareshit.raghu.entity.Doctor;
 import in.nareshit.raghu.exception.DoctorNotFoundException;
 import in.nareshit.raghu.service.IDoctorService;
 import in.nareshit.raghu.service.ISpecializationService;
+import in.nareshit.raghu.util.DoctorUtil;
 
 @Controller
 @RequestMapping("/doctor")
@@ -26,6 +29,12 @@ public class DoctorController {
 	
 	@Autowired
 	private ISpecializationService specializationService;
+	
+	@Autowired
+	private ServletContext context;
+
+	@Autowired
+	private DoctorUtil util;
 	
 	private void commonUi(Model model) {
 		model.addAttribute("specializations", specializationService.getSpecializationIdAndName());
@@ -111,5 +120,16 @@ public class DoctorController {
 		service.updateDoctor(doctor);
 		attributes.addAttribute("message", "DOCTOR '"+doctor.getDocId()+"' UPDATED");
 		return "redirect:all";
+	}
+	
+	//7. show charts
+	@GetMapping("/charts")
+	public String showCharts() {
+		List<Object[]> list = service.getDocotrsBySpecialization();
+		String path = context.getRealPath("/"); //server root location
+		util.generatePie(path,list);
+		util.generateBar(path,list);
+		
+		return "DoctorCharts";
 	}
 } 

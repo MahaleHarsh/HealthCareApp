@@ -57,5 +57,10 @@ public class DoctorServiceImpl implements IDoctorService {
 		List<Object[]> list = repo.getDocIdAndNames();
 		return AppUtil.convertListToMap(list);
 	}
+	
+	@Override
+	public List<Object[]> getDocotrsBySpecialization() {
+		return repo.getDocotrsBySpecialization();
+	}
 
 }

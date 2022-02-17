@@ -14,4 +14,5 @@ public interface IDoctorService {
 	void updateDoctor(Doctor doc);
 	
 	Map<Long,String> getDocIdAndNames();
+	List<Object[]> getDocotrsBySpecialization();
 }
