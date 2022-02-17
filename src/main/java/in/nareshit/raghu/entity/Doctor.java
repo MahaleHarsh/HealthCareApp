@@ -38,6 +38,9 @@ public class Doctor {
 	@Column(name="doc_note_col")
 	private String docNote;
 	
+	@Column(name="doc_img_url_col")
+	private String imageUrl;
+	
 	//====Module Integration
 	@ManyToOne
 	@JoinColumn(name="spec_id_fk_col")
